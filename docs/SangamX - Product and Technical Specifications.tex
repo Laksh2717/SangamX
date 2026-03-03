@@ -1,0 +1,539 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\title{\textbf{SangamX}\\
+\large Multi-College Organization Management Platform}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\onehalfspacing
+
+\section*{1. Platform Overview}
+
+SangamX is a multi-tenant campus organization management platform designed to streamline the administration of clubs and committees within colleges. The platform centralizes organization management, team structures, recruitment workflows, content publishing, and participation tracking while maintaining strict isolation between colleges.
+
+The system ensures secure access control, structured role hierarchy, and scalable participation tracking across all organizations within a college.
+
+\section*{Technology Stack}
+
+SangamX is built using a modern full-stack architecture optimized for scalability, security, and developer efficiency.
+
+\begin{itemize}
+    \item \textbf{Next.js} \\
+    React-based full-stack framework used for building the frontend and server-side logic with App Router architecture.
+
+    \item \textbf{TypeScript} \\
+    Strongly typed language used across the application to ensure type safety, maintainability, and scalable code structure.
+
+    \item \textbf{Supabase} \\
+    Backend-as-a-Service platform providing PostgreSQL database, authentication, and Row Level Security (RLS) for multi-tenant isolation.
+
+    \item \textbf{Supabase Storage} \\
+    Object storage solution used for managing user avatars, organization logos, and post media (images and PDFs) with secure access control.
+
+    \item \textbf{Material UI (MUI)} \\
+    Component library used for building a consistent, responsive, and modern user interface.
+\end{itemize}
+
+\section*{2. Multi-College Architecture}
+
+\begin{itemize}
+    \item Each college operates as an independent tenant.
+    \item Users can only view and interact with data belonging to their own college.
+    \item Organizations, posts, recruitments, and members are isolated at the college level.
+    \item No cross-college visibility is allowed.
+\end{itemize}
+
+\section*{3. User Roles and Access Control}
+
+SangamX implements structured Role-Based Access Control (RBAC).
+
+\subsection*{3.1 Platform-Level Roles}
+\begin{itemize}
+    \item \textbf{Student}: Default role assigned during registration.
+    \item \textbf{College Admin}: Manages organizations within a college.
+\end{itemize}
+
+\subsection*{3.2 Organization-Level Roles}
+\begin{itemize}
+    \item \textbf{Admin}: Core member responsible for managing teams, members, posts, and recruitments.
+    \item \textbf{Member}: Regular team member.
+    \item \textbf{Volunteer}: Selected through recruitment for specific activities.
+    \item \textbf{SPOC}: Single Point of Contact selected through recruitment.
+\end{itemize}
+
+\section*{4. College Lifecycle}
+
+\subsection*{4.1 College Registration}
+\begin{itemize}
+    \item A college registers on the platform.
+    \item A College Admin account is associated with the college.
+    \item College Admin oversees all organizations within the college.
+\end{itemize}
+
+\subsection*{4.2 Student Registration}
+\begin{itemize}
+    \item Students register using their college credentials.
+    \item Each student is associated with exactly one college.
+    \item Students can apply to join organizations or participate in recruitments.
+\end{itemize}
+
+\section*{5. Organization Management}
+
+\subsection*{5.1 Organization Creation}
+\begin{itemize}
+    \item College Admin can create organizations (clubs or committees).
+    \item Each organization automatically includes a Core Team.
+    \item Core members are assigned administrative privileges.
+\end{itemize}
+
+\subsection*{5.2 Team Structure}
+\begin{itemize}
+    \item Organizations can create internal teams (e.g., Media, Design, Sponsorship, Web).
+    \item Every organization member must belong to a team.
+    \item Core Team contains administrative members.
+    \item Teams are managed by Organization Admins or College Admin.
+\end{itemize}
+
+\subsection*{5.3 Membership Management}
+\begin{itemize}
+    \item Organization Admins can add or remove team members.
+    \item College Admin can add or remove Core members.
+    \item Membership lifecycle includes active, completed, and removed states.
+    \item Historical participation is preserved.
+\end{itemize}
+
+\section*{6. Recruitment System}
+
+\subsection*{6.1 Recruitment Types}
+Organizations can initiate recruitment for:
+\begin{itemize}
+    \item Core Members
+    \item Team Members
+    \item Volunteers
+    \item SPOCs
+\end{itemize}
+
+\subsection*{6.2 Application Flow}
+\begin{itemize}
+    \item Students can apply to open recruitments.
+    \item For team-based recruitment, students can apply to multiple teams.
+    \item Each team selection is treated as an independent application.
+    \item Applications are reviewed manually by Organization Admins.
+\end{itemize}
+
+\subsection*{6.3 Selection Process}
+\begin{itemize}
+    \item Applications have statuses: pending, selected, rejected.
+    \item Upon selection, users are added to the organization with appropriate role.
+    \item Volunteers and SPOCs can have time-bound participation.
+    \item Recruitment automatically closes after deadline or manual closure.
+\end{itemize}
+
+\section*{7. Content Publishing System}
+
+\subsection*{7.1 Posts}
+\begin{itemize}
+    \item Organization Admins and College Admins can publish posts.
+    \item Posts may include announcements, achievements, updates, or recruitment notices.
+    \item Posts are visible only within the same college.
+\end{itemize}
+
+\subsection*{7.2 Visibility Rules}
+\begin{itemize}
+    \item General organization details are visible to all college users.
+    \item Sensitive information (e.g., volunteer lists, internal controls) is visible only to organization members.
+    \item Posting and recruitment controls are visible only to authorized roles.
+\end{itemize}
+
+\section*{8. User Profiles}
+
+\subsection*{8.1 Public Profile}
+\begin{itemize}
+    \item Each user has a public profile.
+    \item Profiles display participation history across organizations.
+    \item Shows organization name, team, role, and duration of involvement.
+\end{itemize}
+
+\subsection*{8.2 Participation Tracking}
+\begin{itemize}
+    \item All organization roles are tracked centrally.
+    \item Historical roles remain visible even after completion.
+    \item Enables transparent record of campus involvement.
+\end{itemize}
+
+\section*{9. Organization Page Structure}
+
+Each organization page includes:
+\begin{itemize}
+    \item General description and details.
+    \item List of teams.
+    \item Active members categorized by role.
+    \item Recruitment announcements (if open).
+\end{itemize}
+
+Conditional UI Elements:
+\begin{itemize}
+    \item Recruitment button – visible only to authorized members.
+    \item Post creation button – visible to admins.
+    \item Volunteer/SPOC details – visible only to organization members.
+\end{itemize}
+
+\section*{10. Security and Isolation}
+
+\subsection*{10.1 Authentication}
+\begin{itemize}
+    \item Secure login via Supabase authentication.
+    \item Session-based access control.
+\end{itemize}
+
+\subsection*{10.2 Authorization}
+\begin{itemize}
+    \item Role-based UI restrictions.
+    \item Server-side validation for protected operations.
+\end{itemize}
+
+\subsection*{10.3 Data Isolation}
+\begin{itemize}
+    \item Strict college-level isolation.
+    \item Users cannot access data outside their college.
+\end{itemize}
+
+\section*{11. Key Platform Strengths}
+
+\begin{itemize}
+    \item Multi-tenant architecture.
+    \item Structured team hierarchy.
+    \item Flexible recruitment workflow.
+    \item Participation history tracking.
+    \item Secure and scalable design.
+    \item Clean role-based access control.
+\end{itemize}
+
+\section*{12. Data Models}
+
+\subsection*{12.1 colleges}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid() \\
+    Not Null
+
+    \item \textbf{name} \\
+    Type: text \\
+    Not Null \\
+    Unique \\
+    Indexed
+
+    \item \textbf{slug} \\
+    Type: text \\
+    Not Null \\
+    Unique \\
+    Indexed
+
+    \item \textbf{address} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{contact\_no} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{description} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{website\_url} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{logo\_url} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{admin\_user\_id} \\
+    Type: uuid \\
+    Foreign Key → users.id \\
+    On Delete: Set Null \\
+    Nullable (initially)
+\end{itemize}
+
+\subsection*{12.2 users}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Not Null \\
+    Foreign Key → auth.users.id \\
+    On Delete: Cascade
+
+    \item \textbf{full\_name} \\
+    Type: text \\
+    Not Null
+
+    \item \textbf{email} \\
+    Type: text \\
+    Not Null \\
+    Unique \\
+    Indexed
+
+    \item \textbf{college\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → colleges.id \\
+    On Delete: Restrict \\
+    Indexed
+
+    \item \textbf{role} \\
+    Type: text \\
+    Not Null \\
+    Default: 'student' \\
+    Allowed Values: student, college\_admin
+
+    \item \textbf{roll\_no} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{bio} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{avatar\_url} \\
+    Type: text \\
+    Nullable
+\end{itemize}
+
+\subsection*{12.3 organizations}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid()
+
+    \item \textbf{college\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → colleges.id \\
+    On Delete: Cascade \\
+    Indexed
+
+    \item \textbf{name} \\
+    Type: text \\
+    Not Null
+
+    \item \textbf{slug} \\
+    Type: text \\
+    Not Null \\
+    (college\_id, slug) unique
+
+    \item \textbf{description} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{logo\_url} \\
+    Type: text \\
+    Nullable
+\end{itemize}
+
+\subsection*{12.4 organization\_teams}
+
+\begin{itemize}
+    \item Create a "core" team automatically when an organization is created.
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid()
+
+    \item \textbf{organization\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → organizations.id \\
+    On Delete: Cascade \\
+    Indexed
+
+    \item \textbf{name} \\
+    Type: text \\
+    Not Null
+
+    \item \textbf{description} \\
+    Type: text \\
+    Nullable
+\end{itemize}
+
+\subsection*{12.5 organization\_members}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid()
+
+    \item \textbf{organization\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → organizations.id \\
+    On Delete: Cascade
+
+    \item \textbf{team\_id} \\
+    Type: uuid \\
+    Nullable \\
+    Foreign Key → organization\_teams.id \\
+    if role = admin or member, then team => not null
+    if role = volunteer or spoc, then team => null
+
+    \item \textbf{user\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → users.id
+
+    \item \textbf{role} \\
+    Type: text \\
+    Not Null \\
+    Allowed Values: admin, member, volunteer, spoc
+
+    \item \textbf{ended\_at} \\
+    Type: timestamp \\
+    Nullable 
+
+    \item \textbf{status} \\
+    Type: text \\
+    Not Null \\
+    Allowed Values: active, completed, removed \\
+    Default: active
+
+    \item (user\_id, organization\_id, team\_id) unique 
+\end{itemize}
+
+\subsection*{12.6 posts}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid()
+
+    \item \textbf{college\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → colleges.id
+
+    \item \textbf{organization\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → organizations.id
+
+    \item \textbf{title} \\
+    Type: text \\
+    Not Null
+
+    \item \textbf{content} \\
+    Type: text \\
+    Not Null
+
+    \item \textbf{author\_id} \\
+    Type: uuid \\
+    Not Null \\ 
+    Foreign key → users.id
+
+    \item \textbf{image\_url} \\
+    Type: text \\
+    Nullable
+\end{itemize}
+
+\subsection*{12.7 recruitments}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid()
+
+    \item \textbf{college\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → colleges.id
+
+    \item \textbf{organization\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → organizations.id
+
+    \item \textbf{recruitment\_type} \\
+    Type: text \\
+    Not Null \\
+    Allowed Values: core, team, volunteer, spoc
+
+    \item \textbf{title} \\
+    Type: text \\
+    Not Null
+
+    \item \textbf{description} \\
+    Type: text \\
+    Nullable
+
+    \item \textbf{deadline} \\
+    Type: timestamptz \\
+    Nullable
+
+    \item \textbf{status} \\
+    Type: text \\
+    Not Null \\
+    Default: open \\
+    Allowed Values: open, closed
+\end{itemize}
+
+\subsection*{12.8 applications}
+
+\begin{itemize}
+    \item \textbf{id} \\
+    Type: uuid \\
+    Primary Key \\
+    Default: gen\_random\_uuid()
+
+    \item \textbf{recruitment\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → recruitments.id \\
+    On Delete: Cascade
+
+    \item \textbf{student\_id} \\
+    Type: uuid \\
+    Not Null \\
+    Foreign Key → users.id
+
+    \item \textbf{team\_id} \\
+    Type: uuid \\
+    Nullable \\
+    Foreign Key → organization\_teams.id
+
+    \item \textbf{reviewed\_by} \\
+    Type: uuid \\
+    Nullable \\
+    Foreign Key → users.id
+
+    \item \textbf{status} \\
+    Type: text \\
+    Not Null \\
+    Default: pending \\
+    Allowed Values: pending, selected, rejected
+
+    \item (student\_id, recruitment\_id, team\_id) unique
+\end{itemize}
+
+\section*{13. Conclusion}
+
+SangamX provides a structured and scalable digital infrastructure for managing campus organizations. It ensures operational clarity, secure participation tracking, streamlined recruitment processes, and controlled access to organizational resources, all within a multi-college isolated architecture.
+
+\end{document}
